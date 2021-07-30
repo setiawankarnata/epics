@@ -19,11 +19,11 @@
     <h4 class="text-center">Meeting Dashboard</h4>
     <div class="container-fluid">
         <h6 class="border border-primary text-center rounded">
-            Hari/Tanggal : <b>{{ meeting.meeting_date|date:"l, d M Y" }}</b> | Time
+            Hari/Tanggal : <b>{{ meeting.meeting_date|date:"l, d F Y" }}</b> | Time
             : <b>{{ meeting.start_time|time:"G:i A" }}</b> |
-            Forum : <b>{{ meeting.meeting2forum.nama_forum }}</b> | Title : <b>{{ meeting.title }}</b> | Location
+            Forum : <b>{{ meeting.meeting2forum.nama_forum }}</b> | Location
             : <b>{{ meeting.location }}</b> |
-            Organizer : <b>{{ meeting.organizer }}</b> | Notulen : <b>{{ meeting.notulen }}</b>
+             Notulen : <b>{{ meeting.notulen }}</b>
         </h6>
     </div>
     <div class="row container-fluid">
@@ -47,7 +47,7 @@
                         <td>{{ pest.peserta2departemen.name }}</td>
                         <td>{{ pest.email }}</td>
                         <td><a class="btn btn-sm btn-danger btn-sm"
-                               href="{% url 'pica:hapus_peserta' meeting.pk pest.pk %}">Remove</a></td>
+                               href="{% url 'pica:hapus_peserta' meeting.pk pest.pk %}">Delete</a></td>
                     </tr>
                 {% endfor %}
                 <tr>
@@ -96,7 +96,7 @@
                         </td>
                         <td>{{ top.status }}</td>
                         <td><a class="btn btn-sm btn-danger btn-sm"
-                               href="{% url 'pica:hapus_topik' meeting.pk top.pk %}">Remove</a></td>
+                               href="{% url 'pica:hapus_topik' meeting.pk top.pk %}">Delete</a></td>
                     </tr>
                 {% endfor %}
             </table>

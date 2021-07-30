@@ -25,6 +25,7 @@
             <hr>
             <h6>Problem : {{ topik.problem|safe }}</h6>
             <h6>Action : {{ topik.action|safe }}</h6>
+            <h6>Due date : {{ topik.due_date|date:"l, d F Y" }}</h6>
             <form method="post">
                 {{ form.as_p }}
                 {% csrf_token %}
@@ -41,8 +42,8 @@
                 <tr id="tabel_header">
                     <th>PIC</th>
                     <th>Date</th>
-                    <th>Keterangan</th>
-                    <th>Due Date</th>
+                    <th>Activity/Action</th>
+                    <th>Due Date (New)</th>
                     <th>Status</th>
                     <th></th>
                     <th></th>

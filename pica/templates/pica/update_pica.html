@@ -20,11 +20,13 @@
                 {% csrf_token %}
                 {{ form.media }}
                 {{ form.as_p }}
-                <button class="btn btn-primary" type="submit">Submit</button>
-                <a href="{% url 'pica:create_departemen' %}">
-                    <button class="btn btn-danger" type="submit">Cancel</button>
-                </a>
+                <button class="btn btn-primary mx-2" type="submit">Submit</button>
+                <a href="{% url 'pica:delete_topik' meet topik.pk %}"
+                    class="btn btn-danger mx-2">Delete</a>
+                <a href="{% url 'pica:create_pica' meet %}"
+                    class="btn btn-secondary mx-2">Cancel</a>
             </form>
+            <br>
         </div>
         <div class="col border border-secondary rounded">
             <h5>Activity</h5>

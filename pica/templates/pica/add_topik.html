@@ -30,8 +30,10 @@
                     <tr>
                         <th>Name</th>
                         <th>Due Date</th>
-                        <th>Group Code</th>
+                        <th>Div/Dept/Function</th>
+                        <th>Problem Owner</th>
                         <th>Status</th>
+                        <th></th>
                         <th></th>
                     </tr>
                     </thead>
@@ -39,19 +41,21 @@
                         <tr>
                             <td>{{ tpk.nama_topik }}</td>
                             <td>{{ tpk.due_date }}</td>
-                            <td>{{ tpk.group_code }}</td>
+                            <td>{{ tpk.topik2departemen.name }}</td>
+                            <td>{{ tpk.topik2company.name }}</td>
                             <td>{{ tpk.status }}</td>
                             <td><a class="btn btn-sm btn-success"
                                    href="{% url 'pica:masukkan_topik' meet.pk tpk.pk %}">Add</a></td>
+                            <td><a class="btn btn-sm btn-danger"
+                                   href="{% url 'pica:delete_topik' meet.pk tpk.pk %}">Delete</a></td>
                         </tr>
                     {% endfor %}
                 </table>
             </div>
         </div>
         <br>
-        {% if not sisa_topik %}
-            <a href="{% url 'pica:create_pica' %}" class="btn btn-primary">Create New Topik</a>
-        {% endif %}
-        <a href="{% url 'pica:meeting_dashboard' meet.pk %}" class="btn btn-primary">Back to Dashboard Meeting</a>
+        <a href="{% url 'pica:create_pica' meet.pk %}" class="btn btn-primary mx-2">Create New Topik</a>
+        <a href="{% url 'pica:meeting_dashboard' meet.pk %}" class="btn btn-secondary mx-2">Back to Dashboard
+            Meeting</a>
     </div>
 {% endblock %}

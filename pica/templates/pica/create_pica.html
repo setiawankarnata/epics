@@ -29,7 +29,7 @@
                 {{ form.media }}
                 {{ form.as_p }}
                 <input class="btn btn-primary" type="submit" value="Submit">
-                <a class="btn btn-danger" href="{% url 'accounts:home' %}" role="button">Cancel</a>
+                <a class="btn btn-danger" href="{% url 'pica:add_topik' meet %}" role="button">Cancel</a>
             </form>
         </div>
         <div class="col border border-secondary rounded">
@@ -40,7 +40,7 @@
                 <tr id="tabel_header">
                     <th>Topik</th>
                     <th>Problem Owner</th>
-                    <th>Departemen</th>
+                    <th>Div/Dept/Function</th>
                     <th>Due Date</th>
                     <th>Status</th>
                     <th></th>
@@ -55,9 +55,9 @@
                         <td>{{ topik.due_date }}</td>
                         <td>{{ topik.status }}</td>
                         <td><a class="btn btn-sm btn-info btn-sm"
-                               href="{% url 'pica:update_pica' topik.pk %}">Edit</a></td>
+                               href="{% url 'pica:update_pica' topik.pk meet %}">Edit</a></td>
                         <td><a class="btn btn-sm btn-primary btn-sm"
-                               href="{% url 'pica:add_pic' topik.id %}">PIC</a></td>
+                               href="{% url 'pica:add_pic' topik.id meet %}">PIC</a></td>
                     </tr>
                 {% endfor %}
             </table>

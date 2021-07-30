@@ -10,7 +10,7 @@
     </style>
     <div class="container">
         <h1 class="text-center">Meeting Summary</h1>
-        <p>Title : <b>{{ meet.title }}</b></p>
+        <p>Forum : <b>{{ meet.meeting2forum.nama_forum }}</b></p>
         <p>Date : {{ meet.meeting_date|date:"l, d M Y" }} | Time : {{ meet.start_time|time:"H:i" }}</p>
         <p>Organizer : {{ meet.organizer }} | Notulen : {{ meet.notulen }}</p>
         <p>Peserta :
@@ -23,8 +23,6 @@
             <p>Topik : <b>{{ top.nama_topik }} </b></p>
             <p>Due Date : {{ top.due_date|date:"l, d M Y" }}</p>
             <p>Function: {{ top.topik2departemen.name }}</p>
-            <p><b>Problem :</b> {{ top.problem|safe }}</p>
-            <p><b>Action :</b> {{ top.action|safe }}</p>
             <p>PIC :
                 {% for k,v in person.items %}
                     {% if k == top.id %}
@@ -34,6 +32,8 @@
                     {% endif %}
                 {% endfor %}
             </p>
+            <p><b>Problem :</b> {{ top.problem|safe }}</p>
+            <p><b>Action :</b> {{ top.action|safe }}</p>
             <hr>
         {% endfor %}
     </div>

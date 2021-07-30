@@ -58,10 +58,10 @@ class Forum(models.Model):
 
 
 class Meeting(models.Model):
-    meeting2forum = models.ForeignKey(Forum, on_delete=models.CASCADE, blank=True, null=True,
-                                      related_name="forum2meeting", verbose_name="Forum")
-    title = models.CharField(max_length=100, null=True, blank=True)
     meeting_date = models.DateField(null=True, blank=True)
+    meeting2forum = models.ForeignKey(Forum, on_delete=models.CASCADE, blank=True, null=True,
+                                      related_name="forum2meeting", verbose_name="Meeting Forum")
+    title = models.CharField(max_length=100, null=True, blank=True)
     start_time = models.TimeField(blank=True, null=True)
     end_time = models.TimeField(blank=True, null=True)
     organizer = models.CharField(max_length=50, blank=True, null=True)
@@ -114,11 +114,11 @@ class Activity(models.Model):
     activity2topik = models.ForeignKey(Topik, on_delete=models.CASCADE, null=True, related_name="topik2activity")
     date_activity = models.DateField(auto_now_add=False, auto_now=False, blank=True, null=True,
                                      verbose_name="Date Activity", default=timezone.now)
-    keterangan = models.CharField(max_length=255)
+    keterangan = models.CharField(max_length=255, verbose_name="Activity/Action")
     activity2user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="user2activity",
                                       verbose_name="PIC")
     due_date = models.DateField(auto_now_add=False, auto_now=False, blank=True, null=True,
-                                verbose_name="Due Date")
+                                verbose_name="Due Date (New)")
     expired = models.BooleanField(default=False)
     status = models.CharField(max_length=8, choices=STATUS, default="OPEN")
 

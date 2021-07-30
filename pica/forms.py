@@ -16,7 +16,7 @@ class CreateMeetingForm(forms.ModelForm):
     class Meta:
         model = Meeting
         fields = "__all__"
-        exclude = ["meeting2peserta"]
+        exclude = ["meeting2peserta", "organizer", "title"]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Meeting Name'}),
             'meeting_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}, format='%Y-%m-%d'),
@@ -73,7 +73,7 @@ class CreateActivityForm(forms.ModelForm):
         widgets = {
             'date_activity': forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'readonly': True},
                                              format='%Y-%m-%d'),
-            'keterangan': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Keterangan'}),
+            'keterangan': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Activity/Action'}),
             'due_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}, format='%Y-%m-%d'),
         }
 
@@ -86,7 +86,7 @@ class UpdateActivityForm(forms.ModelForm):
         widgets = {
             'date_activity': forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'readonly': True},
                                              format='%Y-%m-%d'),
-            'keterangan': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Keterangan'}),
+            'keterangan': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Activity/Action'}),
             'due_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}, format='%Y-%m-%d'),
         }
 
@@ -160,10 +160,11 @@ class CreatePesertaForm(forms.ModelForm):
     class Meta:
         model = Peserta
         fields = "__all__"
+        exclude = ["peserta2company"]
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Name peserta'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email address'}),
-            'peserta2company': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Company'}),
+            # 'peserta2company': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Company'}),
             'peserta2departemen': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Departemen'}),
             'bod': forms.NullBooleanSelect(attrs={'class': 'form-control', 'placeholder': 'BOD?'}),
         }

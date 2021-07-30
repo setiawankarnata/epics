@@ -15,13 +15,13 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{% url 'pica:create_meeting' %}">Meeting</a>
-                        <a class="dropdown-item" href="{% url 'pica:create_pica' %}">Topik</a>
+{#                        <a class="dropdown-item" href="{% url 'pica:create_pica' %}">Topik</a>#}
                         <a class="dropdown-item" href="{% url 'pica:create_departemen' %}">Function</a>
                         <a class="dropdown-item" href="{% url 'pica:create_forum' %}">Forum</a>
                         <a class="dropdown-item" href="{% url 'pica:create_company' %}">Company</a>
                         <a class="dropdown-item" href="{% url 'pica:create_peserta' %}">Peserta</a>
                         <a class="dropdown-item" href="{% url 'pica:list_pica' user.id %}">Activity</a>
-                        <a class="dropdown-item" href="{% url 'pica:topik_expired_check'%}">Expired Topik</a>
+                        <a class="dropdown-item" href="{% url 'pica:topik_expired_check'%}">Open Topik</a>
                         <a class="dropdown-item" href="{% url 'pica:search_topik'%}">Search Topik</a>
                     </div>
                 </li>

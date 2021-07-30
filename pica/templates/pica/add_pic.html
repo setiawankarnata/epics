@@ -24,7 +24,7 @@
                     <div class="form-group">
                         <label for="exit"></label>
                         <a class="btn btn-warning form-control" id="exit"
-                           href="{% url 'pica:create_pica' %}"><b>Exit</b></a>
+                           href="{% url 'pica:create_pica' meet %}"><b>Exit</b></a>
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                         <td>{{ usr.last_name }}</td>
                         <td>{{ usr.email }}</td>
                         <td><a class="btn btn-sm btn-success"
-                               href="{% url 'pica:masukkan_pic' topik.pk usr.pk %}">Add</a></td>
+                               href="{% url 'pica:masukkan_pic' topik.pk usr.pk meet %}">Add</a></td>
                     </tr>
                 {% endfor %}
             </table>
@@ -71,7 +71,7 @@
                         <td>{{ usrt.last_name }}</td>
                         <td>{{ usrt.email }}</td>
                         <td><a class="btn btn-sm btn-danger"
-                               href="{% url 'pica:hapus_pic' topik.pk usrt.pk %}">Remove</a></td>
+                               href="{% url 'pica:hapus_pic' topik.pk usrt.pk meet %}">Remove</a></td>
                     </tr>
                 {% endfor %}
             </table>

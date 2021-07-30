@@ -182,6 +182,19 @@ def update_activity(request, pk):
     return render(request, 'pica/update_activity.html', context)
 
 
+def delete_topik(request, pk1, pk2):
+    topik = get_object_or_404(Topik, pk=pk2)
+    meet_id = pk1
+    if request.method == "POST":
+        topik.delete()
+        return redirect('pica:add_topik', meet_id)
+    context = {
+        'topik': topik,
+        'meet': meet_id,
+    }
+    return render(request, 'pica/delete_topik.html', context)
+
+
 def delete_activity(request, pk):
     act = get_object_or_404(Activity, pk=pk)
     topik = act.activity2topik.pk
@@ -194,35 +207,38 @@ def delete_activity(request, pk):
     return render(request, 'pica/delete_activity.html', context)
 
 
-def create_pica(request):
+def create_pica(request, pk):
     topiks = Topik.objects.exclude(status="CLOSE").order_by('due_date')
     if request.method == "POST":
         form = CreatePicaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("pica:create_pica")
+            return redirect("pica:create_pica", pk)
     else:
         form = CreatePicaForm()
     context = {
         'form': form,
         'topiks': topiks,
+        'meet': pk,
     }
     return render(request, 'pica/create_pica.html', context)
 
 
-def update_pica(request, pk):
-    topik = get_object_or_404(Topik, pk=pk)
+def update_pica(request, pk1, pk2):
+    topik = get_object_or_404(Topik, pk=pk1)
     all_activity = Activity.objects.filter(activity2topik=topik).order_by('date_activity')
     if request.method == "POST":
         form = UpdatePicaForm(request.POST, instance=topik)
         if form.is_valid():
             form.save()
-            return redirect("pica:create_pica")
+            return redirect("pica:create_pica", pk2)
     else:
         form = UpdatePicaForm(instance=topik)
     context = {
         'form': form,
         'all_activity': all_activity,
+        'meet': pk2,
+        'topik': topik,
     }
     return render(request, 'pica/update_pica.html', context)
 
@@ -465,8 +481,8 @@ def hapus_peserta(request, pk1, pk2):
     return redirect('pica:meeting_dashboard', meet.pk)
 
 
-def add_pic(request, pk):
-    topik = Topik.objects.get(pk=pk)
+def add_pic(request, pk1, pk2):
+    topik = Topik.objects.get(pk=pk1)
     user_topik = topik.topik2user.all()
     if request.method == "POST":
         nama = request.POST['nama_pic']
@@ -481,22 +497,23 @@ def add_pic(request, pk):
         'sisa_user': sisa_user,
         'topik': topik,
         'user_topik': user_topik,
+        'meet': pk2,
     }
     return render(request, 'pica/add_pic.html', context)
 
 
-def masukkan_pic(request, pk1, pk2):
+def masukkan_pic(request, pk1, pk2, pk3):
     topik = Topik.objects.get(pk=pk1)
     usr = User.objects.get(pk=pk2)
     topik.topik2user.add(usr)
-    return redirect('pica:add_pic', topik.pk)
+    return redirect('pica:add_pic', topik.pk, pk3)
 
 
-def hapus_pic(request, pk1, pk2):
+def hapus_pic(request, pk1, pk2, pk3):
     topik = Topik.objects.get(pk=pk1)
     usr = User.objects.get(pk=pk2)
     topik.topik2user.remove(usr)
-    return redirect('pica:add_pic', topik.pk)
+    return redirect('pica:add_pic', topik.pk, pk3)
 
 
 def add_topik(request, pk):
