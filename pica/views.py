@@ -405,21 +405,6 @@ class DeletePesertaView(SuccessMessageMixin, DeleteView):
         return context
 
 
-# def create_meeting(request):
-#     if request.method == "POST":
-#         form = CreateMeetingForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('accounts:home')
-#     else:
-#         form = CreateMeetingForm()
-#
-#     context = {
-#         'form': form,
-#     }
-#     return render(request, 'pica/create_meeting.html', context)
-
-
 class CreateMeetingView(SuccessMessageMixin, CreateView):
     model = Meeting
     form_class = CreateMeetingForm
