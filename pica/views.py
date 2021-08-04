@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from .models import Company, Peserta, Departemen, Meeting, Forum, Topik, Activity
 from .forms import CreateCompanyForm, CreatePesertaForm, CreatePicaForm, CreateDepartemenForm, UpdateDepartemenForm, \
     CreateMeetingForm, UpdatePesertaForm, CreateForumForm, UpdateForumForm, UpdateCompanyForm, UpdatePicaForm, \
-    CreateActivityForm, UpdateActivityForm, UpdatePicaActionForm
+    CreateActivityForm, UpdateActivityForm, UpdatePicaActionForm, SearchTopikForm
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from xhtml2pdf import pisa
@@ -568,20 +568,56 @@ def topik_expired_check(request):
 
 
 def search_topik(request):
-    topiks = Topik.objects.exclude(status="CLOSE")
-    if request.method == "POST":
-        nama_topik = request.POST['nama_topik']
-        topiks = Topik.objects.exclude(status="CLOSE").filter(nama_topik__icontains=nama_topik)
+    results = []
+    hasil = []
     person = {}
-    for top in topiks:
+
+    if request.method == "POST":
+        forms = SearchTopikForm(request.POST)
+        if forms.is_valid():
+            nama_query = forms.cleaned_data['nama_query']
+            kategory = forms.cleaned_data['kategory']
+            period1 = forms.cleaned_data['period1']
+            period2 = forms.cleaned_data['period2']
+            if kategory == '1':  # by Nama Topik
+                results = Topik.objects.filter(nama_topik__icontains=nama_query)
+            if kategory == '2':  # by Problem
+                results = Topik.objects.filter(problem__icontains=nama_query)
+            if kategory == '3':  # by Action
+                results = Topik.objects.filter(action__icontains=nama_query)
+            if kategory == '4':  # by Meeting forum
+                topik_all = Topik.objects.all()
+                for topik in topik_all:
+                    if nama_query in topik.topik2meeting.meeting2forum.nama_forum:
+                        results.append(topik)
+            if kategory == '5':  # by Status
+                results = Topik.objects.filter(status__icontains=nama_query)
+            if kategory == '6':  # by Function
+                results = Topik.objects.filter(topik2departemen__name__icontains=nama_query)
+            if kategory == '7':  # by Company
+                results = Topik.objects.filter(topik2company__name__icontains=nama_query)
+            if kategory == '8':  # by PIC
+                all_topik = Topik.objects.all()
+                for top in all_topik:
+                    usrs = top.topik2user.all()
+                    for usr in usrs:
+                        if (nama_query.lower() in usr.first_name.lower()) or (
+                                nama_query.lower() in usr.last_name.lower()):
+                            results.append(top)
+            for result in results:
+                if (result.topik2meeting.meeting_date >= period1) and (result.topik2meeting.meeting_date <= period2):
+                    hasil.append(result)
+    for top in hasil:
         pics = User.objects.filter(user2topik=top)
         lst = []
         for pic in pics:
             lst.append(pic.first_name + " " + pic.last_name)
         person[top.pk] = lst
+    forms = SearchTopikForm()
     context = {
-        'topiks': topiks,
+        'topiks': hasil,
         'person': person,
+        'forms': forms,
     }
     return render(request, 'pica/search_topik.html', context)
 

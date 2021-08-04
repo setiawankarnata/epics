@@ -1,6 +1,26 @@
 from django import forms
 from .models import Company, Peserta, Topik, Departemen, Meeting, Forum, Activity
 
+KATEGORI = [
+    ('1', 'Nama Topik'),
+    ('2', 'Problem'),
+    ('3', 'Action'),
+    ('4', 'Meeting Forum'),
+    ('5', 'Status'),
+    ('6', 'Function'),
+    ('7', 'Company'),
+    ('8', 'PIC'),
+]
+
+
+class SearchTopikForm(forms.Form):
+    kategory = forms.ChoiceField(choices=KATEGORI)
+    nama_query = forms.CharField(label='Query', widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=50)
+    period1 = forms.DateField(label='Start periode :',
+        widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}, format='%Y-%m-%d'))
+    period2 = forms.DateField(label='End periode :',
+        widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}, format='%Y-%m-%d'))
+
 
 class CreateForumForm(forms.ModelForm):
     class Meta:
